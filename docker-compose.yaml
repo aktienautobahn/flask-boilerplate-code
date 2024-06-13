@@ -1,0 +1,28 @@
+version: '3.9'
+
+services:
+
+  flask-app:
+    build: ./flask-app
+    container_name: flask-app
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./flask-app:/app    
+    ports:
+      - "8081:8081"
+    environment:
+      - HTTP_MODE=http
+    command: ["uwsgi", "--ini", "app.ini"]
+
+  # nginx:
+  #   image: nginx:latest
+  #   container_name: nginx
+  #   restart: always
+  #   ports:
+  #     - "80:80"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf
+  #   depends_on:
+  #     - flask-app
